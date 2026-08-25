@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Special Surprise For You ✨</title>
+  <!-- Confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ffeef8 0%, #ffc2d1 50%, #e0aaff 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      padding: 35px 25px;
+      border-radius: 24px;
+      box-shadow: 0 20px 45px rgba(255, 75, 145, 0.2);
+      max-width: 500px;
+      width: 100%;
+      position: relative;
+    }
+
+    .step {
+      display: none;
+      animation: fadeIn 0.6s ease-in-out forwards;
+    }
+
+    .step.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    h1 {
+      color: #ff2a7a;
+      font-size: 1.85rem;
+      margin-bottom: 15px;
+    }
+
+    p {
+      color: #555;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      background: linear-gradient(45deg, #ff4d8d, #ff85a1);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(255, 77, 141, 0.35);
+      transition: all 0.25s ease;
+      margin: 8px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 10px 22px rgba(255, 77, 141, 0.45);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(45deg, #845ec2, #b39cd0);
+      box-shadow: 0 6px 18px rgba(132, 94, 194, 0.3);
+    }
+
+    /* Heart Grid Structure */
+    .heart-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 52px);
+      grid-gap: 6px;
+      justify-content: center;
+      margin: 20px auto;
+    }
+
+    .heart-cell {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      background: #ffd6e0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease;
+    }
+
+    .heart-cell:hover {
+      transform: scale(1.15);
+      z-index: 2;
+    }
+
+    .heart-cell img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .empty-cell {
+      visibility: hidden;
+    }
+
+    .emoji-float {
+      font-size: 4rem;
+      margin-bottom: 10px;
+      display: inline-block;
+      animation: float 2.5s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Step 1: Greeting -->
+    <div class="step active" id="step1">
+      <div class="emoji-float">💌</div>
+      <h1>Hey Dear! ✨</h1>
+      <p>Someone planned a tiny sweet surprise for you today. Ready to take a look?</p>
+      <button class="btn" onclick="nextStep(2)">Click Here ➔</button>
+    </div>
+
+    <!-- Step 2: Funny Question -->
+    <div class="step" id="step2">
+      <div class="emoji-float">🤔</div>
+      <h1>Quick Question!</h1>
+      <p>Aapko kya lagta hai, aaj kiski cuteness aur drama sabse top level pe hai? 😜</p>
+      <button class="btn" onclick="nextStep(3)">Obviously Meri! 💅</button>
+      <button class="btn btn-secondary" onclick="nextStep(3)">Pure Universe Mein Meri! 👑</button>
+    </div>
+
+    <!-- Step 3: Birthday Wish -->
+    <div class="step" id="step3">
+      <div class="emoji-float">🎂</div>
+      <h1>Happy Birthday, Gorgeous! 💖</h1>
+      <p>Aapki life hamesha smiles, adventures, aur dher saare chocolates se bhari rahe! Keep shining always.</p>
+      <button class="btn" onclick="goToFinal()">Ek Final Surprise Baaki Hai 🎁</button>
+    </div>
+
+    <!-- Step 4: Final Heart Shape Gallery -->
+    <div class="step" id="step4">
+      <div class="emoji-float">🌸</div>
+      <h1>Specially For You</h1>
+      <p>Memories woven into a heart 💖</p>
+      
+      <!-- 5x4 Heart-arranged Grid -->
+      <div class="heart-grid">
+        <!-- Row 1 -->
+        <div class="heart-cell empty-cell"></div>
+        <div class="heart-cell"><img src="photo1.jpg" alt="pic" onerror="this.src='https://placehold.co/100x100/ff70a6/white?text=💖'"></div>
+        <div class="heart-cell empty-cell"></div>
+        <div class="heart-cell"><img src="photo2.jpg" alt="pic" onerror="this.src='https://placehold.co/100x100/ff70a6/white?text=💖'"></div>
+        <div class="heart-cell empty-cell"></div>
+        
+        <!-- Row 2 -->
+        <div class="heart-cell"><img src="photo3.jpg" alt="pic" onerror="this.src='https://placehold.co/100x100/ff9770/white?text=✨'"></div>
+        <div class="heart-cell"><img src="photo4.jpg" alt="pic" onerror="this.src='https://placehold.co/100x100/ff9770/white?text=🌸'"></div>
+        <div class="heart-cell"><img src="photo5.jpg" alt="pic" onerror="this.src='https://placehold.co/100x100/ff9770/white?text=🎂'"></div>
+        <div class="heart-cell"><img src="photo6.jpg" alt="pic" onerror="this.src='https://placehold.co/100x100/ff9770/white?text=✨'"></div>
+        <div class="heart-cell"><img src="photo7.jpg" alt="pic" onerror="this.src='https://placehold.co/100x100/ff9770/white?text=🌸'"></div>
+
+        <!-- Row 3 -->
+        <div class="heart-cell empty-cell"></div>
+        <div class="heart-cell"><img src="photo8.jpg" alt="pic" onerror="this.src='https://placehold.co/100x100/ffd670/white?text=👑'"></div>
+        <div class="heart-cell"><img src="photo9.jpg" alt="pic" onerror="this.src='https://placehold.co/100x100/ffd670/white?text=❤️'"></div>
+        <div class="heart-cell"><img src="photo10.jpg" alt="pic" onerror="this.src='https://placehold.co/100x100/ffd670/white?text=👑'"></div>
+        <div class="heart-cell empty-cell"></div>
+
+        <!-- Row 4 -->
+        <div class="heart-cell empty-cell"></div>
+        <div class="heart-cell empty-cell"></div>
+        <div class="heart-cell"><img src="photo11.jpg" alt="pic" onerror="this.src='https://placehold.co/100x100/e9ff70/black?text=🎉'"></div>
+        <div class="heart-cell empty-cell"></div>
+        <div class="heart-cell empty-cell"></div>
+      </div>
+
+      <p style="font-size: 0.95rem; color: #777; margin-top: 15px;">Have the best day ever! 🥳</p>
+    </div>
+
+  </div>
+
+  <script>
+    function nextStep(stepNumber) {
+      document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+      document.getElementById('step' + stepNumber).classList.add('active');
+    }
+
+    function triggerConfetti() {
+      const end = Date.now() + 2.5 * 1000;
+      const colors = ['#ff4d8d', '#ffc2d1', '#845ec2', '#ffffff'];
+
+      (function frame() {
+        confetti({
+          particleCount: 3,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: colors
+        });
+        confetti({
+          particleCount: 3,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: colors
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      }());
+    }
+
+    function goToFinal() {
+      nextStep(4);
+      triggerConfetti();
+    }
+  </script>
+</body>
+</html>
